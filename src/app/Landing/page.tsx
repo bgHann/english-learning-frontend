@@ -28,7 +28,7 @@ export default function LandingPage() {
             variant="secondary"
             className="mb-6 px-4 py-1 rounded-full bg-white/80 border-blue-100 text-blue-600 animate-fade-in"
           >
-            🍀EngApp
+            🏆EngApp
           </Badge>
 
           <h1 className="text-5xl md:text-7xl font-extrabold text-zinc-900 tracking-tight leading-[1.1] max-w-4xl">
