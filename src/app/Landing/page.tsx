@@ -8,7 +8,7 @@ import {
   CheckCircle2,
   Headphones,
   BookOpen,
-  Sparkles,
+  Trophy,
   Zap,
 } from "lucide-react"; // Import icon để nhìn chuyên nghiệp hơn
 
@@ -28,7 +28,7 @@ export default function LandingPage() {
             variant="secondary"
             className="mb-6 px-4 py-1 rounded-full bg-white/80 border-blue-100 text-blue-600 animate-fade-in"
           >
-            ✨ EngApp
+            🍀EngApp
           </Badge>
 
           <h1 className="text-5xl md:text-7xl font-extrabold text-zinc-900 tracking-tight leading-[1.1] max-w-4xl">
@@ -110,8 +110,8 @@ export default function LandingPage() {
         {/* --- card --- */}
         <section className="py-12">
           <Card className="relative overflow-hidden border-none bg-zinc-900 p-12 text-center rounded-[2.5rem] shadow-2xl">
-            <div className="absolute top-0 right-0 p-4 opacity-10">
-              <Sparkles className="w-32 h-32 text-white" />
+            <div className="absolute bottom-0 right-0 p-4 opacity-10">
+              <Trophy className="w-32 h-32 text-white" />
             </div>
             <div className="relative z-10 flex flex-col items-center gap-4">
               <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
