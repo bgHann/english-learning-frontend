@@ -5,20 +5,31 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { loginAPI } from "@/services/api";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const { login } = useAuth();
 
   const handleLogin = () => {
     if (!email || !password) {
-      alert("Vui lòng nhập đầy đủ thông tin");
+      alert("Nhập đầy đủ");
       return;
     }
 
-    console.log("Login:", email, password);
+    try {
+      login(email, password);
 
-    // gọi API login ở đây
+      alert("Đăng nhập thành công");
+      router.push("frontend\src\app\login\page.tsx");
+    } catch (err: any) {
+      alert(err.message);
+    }
   };
 
   const handleGoogleLogin = () => {

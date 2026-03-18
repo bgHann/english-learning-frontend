@@ -5,30 +5,29 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const router = useRouter();
+
+  const { register } = useAuth();
 
   const handleRegister = () => {
-    if (!email || !password || !confirmPassword) {
-      alert("Vui lòng nhập đầy đủ thông tin");
-      return;
-    }
-    if (password.length < 6) {
-      alert("Mật khẩu phải ít nhất 6 ký tự");
+    if (!email || !password) {
+      alert("Nhập đầy đủ");
       return;
     }
 
-    if (password !== confirmPassword) {
-      alert("Mật khẩu không khớp");
-      return;
-    }
-    console.log("Register:", email, password);
+    register(email, password);
 
-    // sau này gọi API register ở đây
+    alert("Đăng ký thành công");
+    router.push("/login");
   };
+
   return (
     <div className="flex min-h-screen flex-col items-center p-6 gap-5">
       <h1 className="text-2xl font-bold pt-20">Đăng ký</h1>
