@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header/page";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -27,12 +28,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable)}>
+    <html lang="vi" className={cn("font-sans", inter.variable)}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-white text-zinc-900`}
       >
         <Header />
-        <main className="pt-20">{children}</main>
+
+        <main className="relative pt-20 min-h-screen overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-pink-200/40 blur-[120px]" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-200/40 blur-[120px]" />
+          </div>
+
+          {/* Lớp mờ giúp nội dung dễn dọc*/}
+          <div className="absolute inset-0 z-0 backdrop-blur-[60px] pointer-events-none" />
+
+          {/* Nội dung thực tế của các trang con */}
+          <div className="relative z-10">{children}</div>
+        </main>
+
+        <Footer />
       </body>
     </html>
   );
