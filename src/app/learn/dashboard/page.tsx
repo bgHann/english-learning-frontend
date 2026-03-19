@@ -32,15 +32,6 @@ export default function Dashboard() {
       {/* Header */}
       <div className="flex justify-between items-center mb-10">
         <h1 className="text-xl font-bold">Chào mừng, {user.email}!</h1>
-        <Button
-          variant="ghost"
-          onClick={() => {
-            logout();
-            router.push("/login");
-          }}
-        >
-          Đăng xuất
-        </Button>
       </div>
 
       {/* Streak Card */}
