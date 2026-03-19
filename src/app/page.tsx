@@ -1,6 +1,6 @@
 import Header from "@/components/Header/page";
 import Image from "next/image";
-import Dashboard from "./learn/dashboard/page";
+
 import LangdingPage from "./Landing/page";
 
 export default function Home() {

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { loginAPI } from "@/services/api";
 import { useRouter } from "next/navigation";
 
@@ -17,16 +17,14 @@ export default function Login() {
   const { login } = useAuth();
 
   const handleLogin = () => {
-    if (!email || !password) {
-      alert("Nhập đầy đủ");
-      return;
-    }
+    if (!email || !password) return alert("Nhập đầy đủ");
 
     try {
-      login(email, password);
-
+      login(email, password); // Thực hiện login
       alert("Đăng nhập thành công");
-      router.push("frontend\src\app\login\page.tsx");
+
+      // Chuyển hướng
+      router.push("/learn/dashboard");
     } catch (err: any) {
       alert(err.message);
     }

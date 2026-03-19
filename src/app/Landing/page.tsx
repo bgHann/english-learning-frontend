@@ -2,7 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge"; // Giả sử bạn có component Badge từ shadcn
+import { Badge } from "@/components/ui/badge";
 import {
   ArrowRight,
   CheckCircle2,
@@ -10,7 +10,7 @@ import {
   BookOpen,
   Trophy,
   Zap,
-} from "lucide-react"; // Import icon để nhìn chuyên nghiệp hơn
+} from "lucide-react";
 
 export default function LandingPage() {
   return (

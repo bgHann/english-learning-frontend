@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header/page";
 import Footer from "@/components/Footer";
+import { AuthProvider } from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -32,22 +33,24 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-white text-zinc-900`}
       >
-        <Header />
+        <AuthProvider>
+          <Header />
 
-        <main className="relative pt-20 min-h-screen overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-pink-200/40 blur-[120px]" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-200/40 blur-[120px]" />
-          </div>
+          <main className="relative pt-20 min-h-screen overflow-hidden">
+            <div className="absolute inset-0 z-0">
+              <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-pink-200/40 blur-[120px]" />
+              <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-200/40 blur-[120px]" />
+            </div>
 
-          {/* Lớp mờ giúp nội dung dễn dọc*/}
-          <div className="absolute inset-0 z-0 backdrop-blur-[60px] pointer-events-none" />
+            {/* Lớp mờ giúp nội dung dễn dọc*/}
+            <div className="absolute inset-0 z-0 backdrop-blur-[60px] pointer-events-none" />
 
-          {/* Nội dung thực tế của các trang con */}
-          <div className="relative z-10">{children}</div>
-        </main>
+            {/* Nội dung thực tế của các trang con */}
+            <div className="relative z-10">{children}</div>
+          </main>
 
-        <Footer />
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

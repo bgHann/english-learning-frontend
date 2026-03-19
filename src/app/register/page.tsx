@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -17,15 +17,16 @@ export default function Register() {
   const { register } = useAuth();
 
   const handleRegister = () => {
-    if (!email || !password) {
-      alert("Nhập đầy đủ");
-      return;
+    if (!email || !password) return alert("Nhập đầy đủ");
+    if (password !== confirmPassword) return alert("Mật khẩu không khớp");
+
+    try {
+      register(email, password);
+      alert("Đăng ký thành công!");
+      router.push("/login"); // Chuyển về trang login
+    } catch (err: any) {
+      alert(err.message);
     }
-
-    register(email, password);
-
-    alert("Đăng ký thành công");
-    router.push("/login");
   };
 
   return (

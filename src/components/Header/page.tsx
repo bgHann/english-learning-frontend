@@ -1,96 +1,146 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Sparkles, BookOpen, GraduationCap, Zap, User } from "lucide-react"; // Icon giúp menu chuyên nghiệp hơn
+import { BookOpen, GraduationCap, User, LogOut, Menu, X } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+  const { user, logout, loading } = useAuth();
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  const handleLogout = async () => {
+    if (!confirm("Bạn có chắc muốn đăng xuất không?")) return;
+    await logout();
+    router.push("/login");
+  };
+
   return (
-    // 🌫️ Hiệu ứng kính mờ (Glassmorphism) giúp Header trông sang trọng khi cuộn trang
     <header className="fixed top-0 left-0 z-[100] w-full border-b border-white/20 bg-white/70 backdrop-blur-xl">
       <div className="container mx-auto flex h-20 items-center justify-between px-6">
-        {/*  LOGO  */}
-        <Link
-          href="/"
-          className="flex items-center gap-3 group transition-all duration-300"
-        >
-          {/* Khối biểu tượng (Icon Box) */}
-          <div className="relative w-11 h-11 bg-gradient-to-br from-pink-500 via-purple-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 ease-out overflow-hidden">
-            {/* Hiệu ứng ánh sáng quét qua khi hover (Glow effect) */}
-            <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-            <span className="text-white text-2xl font-[900] tracking-tighter leading-none select-none drop-shadow-md">
-              E
-            </span>
+        {/* LOGO */}
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="w-11 h-11 bg-gradient-to-br from-pink-500 via-purple-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-all duration-500">
+            <span className="text-white text-2xl font-[900]">E</span>
           </div>
-
-          {/* Tên  */}
-          <div className="flex flex-col justify-center">
-            <span className="text-xl font-black tracking-tighter text-zinc-800 leading-none">
-              ENGAPP<span className="text-pink-500">.</span>
-            </span>
-            <span className="text-[10px] font-bold text-zinc-400 tracking-[0.2em] uppercase leading-tight mt-1">
-              Nhóm hihi
-            </span>
-          </div>
+          <span className="text-xl font-black text-zinc-800">
+            ENGAPP<span className="text-pink-500">.</span>
+          </span>
         </Link>
 
-        {/* MENU ĐIỀU HƯỚNG */}
-        <nav className="hidden md:flex items-center gap-2">
-          {[
-            {
-              name: "Khóa học",
-              href: "/courses",
-              icon: <BookOpen className="w-4 h-4" />,
-            },
-            {
-              name: "Lộ trình",
-              href: "/roadmap",
-              icon: <GraduationCap className="w-4 h-4" />,
-            },
-            {
-              name: "Ưu đãi",
-              href: "/pricing",
-              icon: <Zap className="w-4 h-4 text-yellow-500" />,
-            },
-          ].map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-zinc-600 hover:text-pink-600 hover:bg-pink-50 rounded-full transition-all duration-200"
-            >
-              {item.icon}
-              {item.name}
-            </Link>
-          ))}
+        {/* DESKTOP MENU */}
+        <nav className="hidden md:flex items-center gap-4">
+          <Link
+            href="/courses"
+            className="flex items-center gap-2 text-sm font-bold text-zinc-600 hover:text-pink-600"
+          >
+            <BookOpen className="w-4 h-4" /> Khóa học
+          </Link>
+
+          <Link
+            href="/roadmap"
+            className="flex items-center gap-2 text-sm font-bold text-zinc-600 hover:text-pink-600"
+          >
+            <GraduationCap className="w-4 h-4" /> Lộ trình
+          </Link>
         </nav>
 
-        {/* Nút bấm bo tròn  */}
+        {/* RIGHT SIDE */}
         <div className="flex items-center gap-3">
-          <Link href="/login">
-            <Button
-              variant="ghost"
-              className="hidden sm:flex items-center gap-2 font-bold text-zinc-600 hover:text-zinc-900 rounded-full px-6 transition-colors"
-            >
-              <User className="w-4 h-4" />
-              Đăng nhập
-            </Button>
-          </Link>
+          {loading ? (
+            <div className="w-20 h-10 bg-zinc-100 animate-pulse rounded-full" />
+          ) : user ? (
+            <div className="flex items-center gap-3">
+              {/* Avatar */}
+              <div className="hidden sm:flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-pink-500 flex items-center justify-center text-white font-bold">
+                  {user.email?.[0].toUpperCase()}
+                </div>
+                <span className="text-sm font-semibold text-zinc-700 hidden md:inline">
+                  {user.email?.split("@")[0]}
+                </span>
+              </div>
 
-          <Link href="/register">
-            <Button className="bg-zinc-900 hover:bg-zinc-800 text-white font-bold rounded-full px-8 py-6 shadow-xl shadow-zinc-200 hover:-translate-y-0.5 active:scale-95 transition-all">
-              Bắt đầu miễn phí
-            </Button>
-          </Link>
+              {/* Logout */}
+              <Button
+                onClick={handleLogout}
+                variant="ghost"
+                className="text-red-500 hover:text-red-600 hover:bg-red-50 rounded-full"
+              >
+                <LogOut className="w-4 h-4" />
+              </Button>
+            </div>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button
+                  variant="ghost"
+                  className="hidden sm:flex items-center gap-2 font-bold text-zinc-600"
+                >
+                  <User className="w-4 h-4" /> Đăng nhập
+                </Button>
+              </Link>
 
-          {/* Menu Mobile */}
-          <button className="md:hidden p-2 text-zinc-600">
-            <div className="w-6 h-0.5 bg-current mb-1.5 rounded-full" />
-            <div className="w-6 h-0.5 bg-current mb-1.5 rounded-full" />
-            <div className="w-4 h-0.5 bg-current rounded-full ml-2" />
+              <Link href="/register">
+                <Button className="bg-zinc-900 text-white font-bold rounded-full px-6">
+                  Bắt đầu
+                </Button>
+              </Link>
+            </>
+          )}
+
+          {/* MOBILE BUTTON */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden p-2 text-zinc-600"
+          >
+            {open ? <X /> : <Menu />}
           </button>
         </div>
       </div>
+
+      {/* MOBILE MENU */}
+      {open && (
+        <div className="md:hidden px-6 pb-4 flex flex-col gap-3 bg-white/90 backdrop-blur-xl">
+          <Link href="/courses" onClick={() => setOpen(false)}>
+            <div className="flex items-center gap-2 py-2 text-zinc-700">
+              <BookOpen className="w-4 h-4" /> Khóa học
+            </div>
+          </Link>
+
+          <Link href="/roadmap" onClick={() => setOpen(false)}>
+            <div className="flex items-center gap-2 py-2 text-zinc-700">
+              <GraduationCap className="w-4 h-4" /> Lộ trình
+            </div>
+          </Link>
+
+          {!user && (
+            <>
+              <Link href="/login" onClick={() => setOpen(false)}>
+                <div className="py-2">Đăng nhập</div>
+              </Link>
+
+              <Link href="/register" onClick={() => setOpen(false)}>
+                <div className="py-2 font-bold text-pink-600">
+                  Bắt đầu miễn phí
+                </div>
+              </Link>
+            </>
+          )}
+
+          {user && (
+            <button
+              onClick={handleLogout}
+              className="text-left py-2 text-red-500"
+            >
+              Đăng xuất
+            </button>
+          )}
+        </div>
+      )}
     </header>
   );
 }
