@@ -86,7 +86,7 @@ export default function Header() {
 
               <Link href="/register">
                 <Button className="bg-zinc-900 text-white font-bold rounded-full px-6">
-                  Bắt đầu
+                  Đăng ký
                 </Button>
               </Link>
             </>
